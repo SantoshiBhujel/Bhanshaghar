@@ -107,11 +107,13 @@ Route::get('/personalpost','PostController@personal')->name('posts.personal');
 //  ------------------------
 
 //Route::get('profile/edit','UserController@edit');
+Route::get('profile/edit','UserController@edit')->name('userinfo.edit');
+
 Route::post('profile/edit','UserController@userinfoupdate')->name('userinfo.edit');
 
+Route::get('/profile/picture/update','UserController@imageupload')->name('propicupdate');
 
 Route::post('/profile/picture/update','UserController@imageupdate')->name('propicupdate');
-
 
 Route::get('/profile','UserController@profile')->name('profile');
 

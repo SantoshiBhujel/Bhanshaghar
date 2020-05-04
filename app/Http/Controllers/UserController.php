@@ -18,11 +18,13 @@ class UserController extends Controller
         return view('profile.profile',array('user'=> Auth::user(), 'posts'=>Auth::user()->Posts));
     }
 
+    
     public function edit()
     {
         $user= User::find(auth()->user()->id);
         return view('profile.userinfoupdate');
     }
+
 
     public function userinfoupdate(Request $request)
     {
@@ -32,37 +34,40 @@ class UserController extends Controller
         $user->address= $request->address;
         $user->phone= $request->phone;
         //$user->active= $request->active;
-        $user->password= Hash::make($request['password']);
+        //$user->password= Hash::make($request['password']);
         $user->save();
-
-        $code= $user->ActivationCode()->create([
-            'code'=> str::random(128)
-        ]);
+        return redirect('/profile')->with('success','Profile info successfully changed.');
+        // $code= $user->ActivationCode()->create([
+        //     'code'=> str::random(128)
+        // ]);
      
-        Auth::logout();
+        // Auth::logout();
         
-        event(new ActivationEmailEvent($user));
+        // event(new ActivationEmailEvent($user));
    
-        return redirect('/login')->with('Success','Password successfully changed . We sent you an email, Please check within a couple of minutes to activate!');
+        // return redirect('/login')->with('Success','Password successfully changed . We sent you an email, Please check within a couple of minutes to activate!');
     }
 
 
     protected function imageupdate(Request $request)
     {
+        $user=User::find(auth()->user()->id);
+        
         if($request->hasFile('profile_image'))
         {
             $extension=$request->file('profile_image')->getClientOriginalExtension();
             $fileName= 'profile'.'-'.time().'.'.$extension;
             $path=$request->file('profile_image')->storeAs('public/profile_images',$fileName);
+            $user->profile_image = $fileName;
+            $user->save();
+            return redirect('/profile')->with('success','DP successfully changed.');
         }
 
-        $user=User::find(auth()->user()->id);
-        
-        if($request->hasFile('profile_image'))
-        {
-            $user->profile_image = $fileName;
-        }
-        $user->save();
+    }
+
+    protected function imageupload()
+    {
+        return view('profile.imageupload');
     }
     
 }

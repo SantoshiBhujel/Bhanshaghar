@@ -88,7 +88,7 @@
             justify-content: space-between;
             align-items: center;
         }
-        .profile .profile__blog .blog__wrapper .content .heading h1{
+        .profile .profile__blog .blog__wrapper .content .heading h3{
            margin-bottom: 5px;
         }
         .profile .profile__blog .blog__wrapper .content .heading button{
@@ -107,49 +107,55 @@
             <div class="profile__info">
 
                 <div class="image">
-                    <img src="/storage/profile_images/{{$user->profile_image}}" alt="">
+                    <a href="{{ route('propicupdate') }}""><img src="/storage/profile_images/{{$user->profile_image}}" alt=""></a>
                 </div>
 
                 <div class="">
                     <h2>{{$user->name}}</h2>
                     <p>{{$user->phone}}</p>
+                    <p>{{ $user->address }}</p>
                     <p>Email: {{$user->email}}</p>
                 </div>
 
                 <div class="">
                     <a href="{{route('userinfo.edit')}}" target="#" ><button>Edit</button></a>
-                    {{-- <iframe height="300px" width="100%" src="" name="iframe_a"></iframe> --}}
                 </div>
 
             </div>
 
 
             <div class="profile__blog">
-                <h1 class="top-h1">My Blog</h1>
-                <div class="blog__wrapper">
-                    
-                    @foreach ($posts as $post)
-                            <div class="image">
-                                <img src="/storage/cover_images/{{$post->cover_image}}" alt="">
-                            </div>
-                            <div class="content">
-                                
-                                <div class="heading">
-                                    <div class="title">
-                                        <h1>{{$post->title}}</h1>
-                                        <span>Date: {{$post->created_at}} </span>
-                                    </div>
-                                    <div class="action">
-                                        <button>Edit</button>
-                                        <button style="background: red;">Delete</button>
-                                    </div>
+                <div class="top-h1">My Blog </div>
+                <div style="float:right"> <a href="/posts/create">Post your blog</a> </div>
+        
+                @foreach ($user->Posts as $post)
+                    <div class="blog__wrapper">
+                        <div class="image">
+                            <img src="/storage/posts_images/{{$post->cover_image}}" alt="" style="width:200px; height:200px;">
+                        </div>
+                        <div class="content">
+                            
+                            <div class="heading">
+                                <div class="title">
+                                    <h3>{{$post->title}}</h3>
+                                    <h3>Created On: {{$post->created_at}} </h3>
+                                    
                                 </div>
-
-                                <p>{{$post->body}}</p>
-                        
+                                <div class="action">
+                                    <a href="/posts/{{$post->id}}/edit"> <button>Edit</button></a>
+                                    <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
+                                        @csrf{{--    token pathako --}}
+                                        {{method_field('DELETE')}}
+                                        <button style="background: red;" type="submit" class="btn btn-primary" name="delete" value="delete"> {{ __('Delete') }}</button>
+                                    </form>
+                                </div>
                             </div>
-                    @endforeach
-                </div>
+
+                            <p>{{$post->body}}</p>
+                    
+                        </div>
+                    </div>
+                @endforeach
 
             </div>
         </div>
