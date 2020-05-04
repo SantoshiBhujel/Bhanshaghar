@@ -6,8 +6,9 @@ use auth;
 use App\Item;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use App\Http\Controllers\CheckoutController;
 
-class CartController extends Controller
+class CartController extends Controller 
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +17,13 @@ class CartController extends Controller
      */
     public function index()
     {
-        return view('cart.cart');
+        return view('cart.cart')->with([
+            'tax' => $this->getNumbers()->get('tax'),
+            'discount' => $this->getNumbers()->get('discount') ,
+            'newSubtotal' => $this->getNumbers()->get('newSubtotal'),
+            'newTax' => $this->getNumbers()->get('newTax'),
+            'newTotal' => $this->getNumbers()->get('newTotal'),
+       ]);
     }
 
     /**
@@ -161,5 +168,26 @@ class CartController extends Controller
         return redirect()->route('cart.index')->with('success','Item added for Save For Later!');
 
     }
+
+    private function getNumbers()
+    {
+        $tax= config('cart.tax')/100;
+        $discount=session()->get('coupon')['discount'] ?? 0;
+        $code=session()->get('coupon')['name']?? null;
+        $newSubtotal=(Cart::subtotal() - $discount);
+        $newTax = $newSubtotal * $tax ;
+        $newTotal= $newSubtotal + $newTax;   // OR  $newTotal = $newSubtotal*(1+$tax);
+        
+        return collect([
+
+            'tax' => $tax,
+            'discount' => $discount ,
+            'code' => $code,
+            'newSubtotal' => $newSubtotal,
+            'newTax' => $newTax,
+            'newTotal' => $newTotal,
+       ]);
+    }
+    
 
 }

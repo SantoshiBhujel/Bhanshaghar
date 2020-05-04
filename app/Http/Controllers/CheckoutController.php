@@ -64,26 +64,24 @@ class CheckoutController extends Controller
         //$email= $user->email;
         $contents= Cart::content()->map(function($item)
         {
-
           return $item->model->name.','. $item->qty;
-
         })->values()->toJson();
 
         try
         {
-            // $charge= Stripe::charges()->create([
-            //     'amount'=> $this->getNumbers()->get('newTotal'),
-            //     'currency' =>'NPR',
-            //     'source'=> $request->stripeToken,
-            //     'description' => 'Order',
-            //     'receipt_email'=>$request->email,
-            //     'metadata'=>[
-            //             'contents'=>$contents,
-            //             'quantity' => Cart::instance('default')->count(),
-            //             'discount' => collect( session()->get('coupon'))->toJson(),
-            //     ],
+            $charge= Stripe::charges()->create([
+                'amount'=> $this->getNumbers()->get('newTotal'),
+                'currency' =>'NPR',
+                'source'=> $request->stripeToken,
+                'description' => 'Order',
+                'receipt_email'=>$request->email,
+                'metadata'=>[
+                        'contents'=>$contents,
+                        'quantity' => Cart::instance('default')->count(),
+                        'discount' => collect( session()->get('coupon'))->toJson(),
+                ],
 
-            // ]);
+            ]);
 
 
             $order = $this->addToOrdersTable($request,null);  //tala ko helper function call gareko 
@@ -202,14 +200,12 @@ class CheckoutController extends Controller
         //
     }
 
-
-
     
     private function getNumbers()
     {
         $tax= config('cart.tax')/100;
         $discount=session()->get('coupon')['discount'] ?? 0;
-        $code=session()->get('coupon')['name']??null;
+        $code=session()->get('coupon')['name']?? null;
         $newSubtotal=(Cart::subtotal() - $discount);
         $newTax = $newSubtotal * $tax ;
         $newTotal= $newSubtotal + $newTax;   // OR  $newTotal = $newSubtotal*(1+$tax);
@@ -224,4 +220,5 @@ class CheckoutController extends Controller
             'newTotal' => $newTotal,
        ]);
     }
+
 }

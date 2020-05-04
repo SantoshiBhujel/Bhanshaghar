@@ -64,18 +64,33 @@
                 <tfoot>
                     <tr>
                         <td colspan="5">&nbsp;</td>
-                        <td>Subtotal</td>
+                        <td>Subtotal:</td>
                         <td><?php echo Cart::subtotal(); ?></td>
                     </tr>
+                    
+                    
+                    @if (session()->has('coupon'))
                     <tr>
                         <td colspan="5">&nbsp;</td>
-                        <td>Tax(13%)</td>
-                        <td><?php echo Cart::tax(); ?></td>
+                        <td>Discount ({{ session()->get('coupon')['name'] }}):</td>
+                        <td>-{{ $discount }}</td>
                     </tr>
                     <tr>
                         <td colspan="5">&nbsp;</td>
-                        <td>Total</td>
-                        <td><?php echo Cart::total(); ?></td>
+                        <td>SubTotal after discount:</td>
+                        <td>{{ $newSubtotal }}</td>
+                    </tr>
+                    @endif
+
+                    <tr>
+                        <td colspan="5">&nbsp;</td>
+                        <td>Tax({{config('cart.tax')}}%)):</td>
+                        <td>{{ $newTax }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">&nbsp;</td>
+                        <td>Total:</td>
+                        <td>{{ $newTotal }}</td>
                     </tr>
                 </tfoot>
         </table>

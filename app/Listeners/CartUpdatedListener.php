@@ -43,7 +43,6 @@ class CartUpdatedListener
             // ]);   
 
             //above task was done using the job
-            
             dispatch_now(new UpdateCoupon($coupon));
         } 
     }
