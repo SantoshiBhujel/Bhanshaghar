@@ -49,8 +49,8 @@
 
           <div class="form-group row">
             <div class="form-group col-sm- col-md-6">
-              <label for="address">Required Date</label>
-              <input type="datetime-local" class="form-control" id="requiredDate" name="requiredDate" required>
+              <label for="address">Required Date + Time</label>
+              <input type="datetime-local" class="form-control" id="requiredDate" name="requiredDate" required value="<?=date('Y-m-d\TH:i ', time()); ?>">
             </div>
 
           </div> 

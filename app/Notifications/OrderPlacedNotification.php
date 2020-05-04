@@ -2,10 +2,11 @@
 
 namespace App\Notifications;
 
+use App\Order;
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 
 class OrderPlacedNotification extends Notification
 {
@@ -16,9 +17,14 @@ class OrderPlacedNotification extends Notification
      *
      * @return void
      */
-    public function __construct()
+    public $order;
+
+    public function __construct(Order $order)
     {
-        //
+        $this->order= $order;
+        // print_r($this->order);
+        // dd();
+        
     }
 
     /**
@@ -29,7 +35,8 @@ class OrderPlacedNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        //dd($notifiable);
+        return ['mail','database'];
     }
 
     /**
@@ -40,9 +47,21 @@ class OrderPlacedNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)->markdown('emails.orderplacednotification');
+        //dd($notifiable);
+       
+        return (new MailMessage())->from($this->order->user->email)
+                                ->subject('Order Placed')
+                                ->markdown('emails.orderplacednotification',[ 'order'=>$this->order]);
     }
 
+
+
+    public function toDatabase()
+    {
+        return [
+            'amount'=> round($this->order->billing_total,2),
+        ];
+    }
     /**
      * Get the array representation of the notification.
      *

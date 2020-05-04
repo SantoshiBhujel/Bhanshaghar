@@ -12,7 +12,6 @@ class OrderPlaced extends Mailable
 {
     use Queueable, SerializesModels;
     public $order;
-    public $orders;
     /**
      * Create a new message instance.
      *

@@ -21,12 +21,12 @@ class Coupon extends Model
 
         if($this->type =='fixed')
         {
-            return $this->value* Coupon::count();
+            return $this->value;
         }
 
         elseif($this->type == 'percent')
         {
-            return round(($this->percent_off) / 100* $total);
+            return round(($this->percent_off/ 100)* $total);
         }
         
         else

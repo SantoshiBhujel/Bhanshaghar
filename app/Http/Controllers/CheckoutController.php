@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use auth;
+use App\User;
 use App\Order;
 use App\ItemOrder;
 use Carbon\Carbon;
@@ -12,6 +13,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\CheckoutRequest;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Cartalyst\Stripe\Laravel\Facades\Stripe;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\OrderPlacedNotification;
 use Cartalyst\Stripe\Exception\CardErrorException;
 
 class CheckoutController extends Controller
@@ -57,7 +60,8 @@ class CheckoutController extends Controller
     public function store(CheckoutRequest $request)
     {
        // dd($request->all());
-       
+        $user=User::where('role','admin')->first();
+        //$email= $user->email;
         $contents= Cart::content()->map(function($item)
         {
 
@@ -67,23 +71,25 @@ class CheckoutController extends Controller
 
         try
         {
-            $charge= Stripe::charges()->create([
-                'amount'=> $this->getNumbers()->get('newTotal'),
-                'currency' =>'NPR',
-                'source'=> $request->stripeToken,
-                'description' => 'Order',
-                'receipt_email'=>$request->email,
-                'metadata'=>[
-                        'contents'=>$contents,
-                        'quantity' => Cart::instance('default')->count(),
-                        'discount' => collect( session()->get('coupon'))->toJson(),
-                ],
+            // $charge= Stripe::charges()->create([
+            //     'amount'=> $this->getNumbers()->get('newTotal'),
+            //     'currency' =>'NPR',
+            //     'source'=> $request->stripeToken,
+            //     'description' => 'Order',
+            //     'receipt_email'=>$request->email,
+            //     'metadata'=>[
+            //             'contents'=>$contents,
+            //             'quantity' => Cart::instance('default')->count(),
+            //             'discount' => collect( session()->get('coupon'))->toJson(),
+            //     ],
 
-            ]);
+            // ]);
 
 
             $order = $this->addToOrdersTable($request,null);  //tala ko helper function call gareko 
-            Mail::send(new OrderPlaced($order));
+            Mail::queue(new OrderPlaced($order));
+            
+            Notification::send( $user , new OrderPlacedNotification($order));
             //successful payment 
 
             Cart::instance('default')->destroy();

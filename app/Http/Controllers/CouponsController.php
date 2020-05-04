@@ -29,8 +29,7 @@ class CouponsController extends Controller
         // {
         //     return redirect()->route('checkout.index')->with('error','You have already used the Coupon!');
         // }
-        
-
+      
         session()->put('coupon',[
             'name'=> $coupon->code,
             'discount' => $coupon->discount(Cart::subtotal())

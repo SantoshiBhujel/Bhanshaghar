@@ -72,5 +72,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class,'users_id');
     }
+
+    // public function routeNotificationForMail()
+    // {
+    //     return $this->email_address; //You e-mail property here
+    // }
      
 }
