@@ -98,17 +98,11 @@ class RegisterController extends Controller
     
     protected function registered(Request $request, $user)
     {
-        //Insert code into table
-        // $email_data = array(
-        //     'name' => $user['name'],
-        //     'email' => $user['email'],
-        // );
+       
         $code= $user->ActivationCode()->create([
             'code'=> str::random(128)
         ]);
-        //print_r($code);
-        //Logout user
-        //$this->guard()->logout();
+    
         Auth::logout();
         
         event(new ActivationEmailEvent($user));

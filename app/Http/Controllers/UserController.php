@@ -69,5 +69,34 @@ class UserController extends Controller
     {
         return view('profile.imageupload');
     }
+
+    protected function passwordedit()
+    {
+        return view('profile.passwordedit');
+    }
+
+
+    protected function password_edit(Request $request)
+    {
+        $this->validate($request,[
+            'password' =>'required | string | min:8  | confirmed', 
+            'password_confirmation' =>'required | min:8'
+        ]);
+
+        $user= Auth::user();
+        $user->active= '0';
+        $user->password= Hash::make($request['password']);
+        $user->save();
+
+        $code= $user->ActivationCode()->create([
+            'code'=> str::random(128)
+        ]);
+     
+        Auth::logout();
+        
+        event(new ActivationEmailEvent($user));
+   
+        return redirect('/login')->with('Success','Password successfully changed . We sent you an email, Please check within a couple of minutes to activate!');
+    }
     
 }

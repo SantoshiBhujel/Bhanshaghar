@@ -119,6 +119,7 @@
 
                 <div class="">
                     <a href="{{route('userinfo.edit')}}" target="#" ><button>Edit</button></a>
+                    <a href="{{route('password.edit')}}" target="#" ><button>Change Password</button></a>
                 </div>
 
             </div>

@@ -111,6 +111,10 @@ Route::get('profile/edit','UserController@edit')->name('userinfo.edit');
 
 Route::post('profile/edit','UserController@userinfoupdate')->name('userinfo.edit');
 
+Route::get('password/edit','UserController@passwordedit')->name('password.edit');
+
+Route::post('password/edit','UserController@password_edit')->name('password.edit');
+
 Route::get('/profile/picture/update','UserController@imageupload')->name('propicupdate');
 
 Route::post('/profile/picture/update','UserController@imageupdate')->name('propicupdate');
