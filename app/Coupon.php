@@ -4,6 +4,7 @@ namespace App;
 
 use App\Coupon;
 use Illuminate\Database\Eloquent\Model;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class Coupon extends Model
 {
@@ -21,7 +22,7 @@ class Coupon extends Model
 
         if($this->type =='fixed')
         {
-            return $this->value;
+            return $this->value*Cart::count();
         }
 
         elseif($this->type == 'percent')

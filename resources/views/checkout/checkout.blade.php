@@ -49,7 +49,7 @@
 
           <div class="form-group row">
             <div class="form-group col-sm- col-md-6">
-              <label for="address">Required Date + Time</label>
+              <label for="address">Required Date + T ime</label>
               <input type="datetime-local" class="form-control" id="requiredDate" name="requiredDate" required value="<?=date('Y-m-d\TH:i ', time()); ?>">
             </div>
 
@@ -120,7 +120,7 @@
           <h2>Your Order</h2>
 
           @foreach (Cart::content() as $item)  
-            <img src="/storage/items_images/{{$item->model->image}}" alt="item">
+            <img style="height=150px; width=150px;" src="/storage/items_images/{{$item->model->image}}" alt="item">
             <div>
                 <div ></div>Item: {{ $item->model->name }}</div>
                 <div ></div>
@@ -140,14 +140,14 @@
                 <button style="font-size:12px">Remove</button>
               </form> : 
 
-               -{{ $discount }}  {{--discount amount --}}
+               -{{ $discount }}  {{--discount  amount --}}
               <br>
               <hr>
               New Subtotal :  {{ $newSubtotal }}<br>
           @endif
           <hr>
           Tax ({{config('cart.tax')}}%):  {{ $newTax }}<br>
-          <span>Total:  {{  $newTotal}}</span>
+          <span>Total:  {{ $newTotal }}</span>
       </div>
     </div>   
   </section> 
