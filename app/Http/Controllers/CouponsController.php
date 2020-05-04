@@ -39,7 +39,7 @@ class CouponsController extends Controller
         // above task done using job 
         dispatch_now(new UpdateCoupon($coupon));
 
-        return redirect()->route('checkout.index')->with('success','Coupon applied');
+        return redirect()->back()->with('success','Coupon applied');
     }
 
    

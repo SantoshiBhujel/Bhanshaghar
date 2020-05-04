@@ -94,27 +94,8 @@
                 </div>
             @endif --}}
       </div>{{--  end of left --}}
-      
-
-      @if(! session()->has('coupon'))
-        <a href="">Have a code?</a>
-        <section class="signup">
-            <div class="left">
-                <form action="{{ route('coupons.store') }}" method="POST">
-                  @csrf
-                    <div class="form-group row">
-                        <div class="form-group col-sm-6 col-md-6">
-                          <input type="text" name="coupon_code" id="coupon_code">
-                        </div>
-                    </div>
-                  <button type="submit" value="">Apply</button>
-                </form>
-            </div>
-        </section>
-      @endif
        
-    
-
+  
 
       <div class="checkout-right">
           <h2>Your Order</h2>
