@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Coupon;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Gloudemans\Shoppingcart\Facades\Cart;
+
+use App\Coupon;
+use App\Jobs\UpdateCoupon;
 
 class CouponsController extends Controller
 {
@@ -30,10 +32,12 @@ class CouponsController extends Controller
         //     return redirect()->route('checkout.index')->with('error','You have already used the Coupon!');
         // }
       
-        session()->put('coupon',[
-            'name'=> $coupon->code,
-            'discount' => $coupon->discount(Cart::subtotal())
-        ]);
+        // session()->put('coupon',[
+        //     'name'=> $coupon->code,
+        //     'discount' => $coupon->discount(Cart::subtotal())
+        // ]);
+        // above task done using job 
+        dispatch_now(new UpdateCoupon($coupon));
 
         return redirect()->route('checkout.index')->with('success','Coupon applied');
     }
