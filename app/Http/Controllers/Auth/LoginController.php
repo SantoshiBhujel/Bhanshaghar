@@ -48,7 +48,7 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)//AuthenticatesUsers bata impoert garera overwrite gareko
     {
         //
-        if(!($user->userIsActivated()))
+        if(!($user->userIsActivated())) //helper method from user model
         {
             Auth::logout();
             //return redirect('/login')->with('Error','You are not active !!! Need the Code? Click Here! <a href="'.route('code.resend').'?email='.$user->email.'">Resend Code</a>');

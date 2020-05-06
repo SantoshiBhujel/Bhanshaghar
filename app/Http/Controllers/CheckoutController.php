@@ -200,13 +200,13 @@ class CheckoutController extends Controller
         //
     }
 
-    
     private function getNumbers()
     {
         $tax= config('cart.tax')/100;
         $discount=session()->get('coupon')['discount'] ?? 0;
         $code=session()->get('coupon')['name']?? null;
-        $newSubtotal=(Cart::subtotal() - $discount);
+        $Subtotal=(float) str_replace(',', '', Cart::subtotal());
+        $newSubtotal=($Subtotal - $discount);
         $newTax = $newSubtotal * $tax ;
         $newTotal= $newSubtotal + $newTax;   // OR  $newTotal = $newSubtotal*(1+$tax);
         
