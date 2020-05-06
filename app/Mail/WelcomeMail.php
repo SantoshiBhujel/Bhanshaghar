@@ -28,6 +28,7 @@ class WelcomeMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.welcomemail');// view bhitra ko emails ko welcomemail sanga connect gareko
+        return $this->to('realsantoshi35@gmail.com')
+                    ->markdown('emails.welcomemail');// view bhitra ko emails ko welcomemail sanga connect gareko
     }
 }

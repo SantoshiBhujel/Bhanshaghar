@@ -81,6 +81,13 @@ Route::get('/activate/{code}','ActivationController@activation')->name('user.act
 
 Route::get('/resend/code','ActivationController@coderesend')->name('code.resend');
 
+
+Route::get('/mail', function () {
+
+    Mail::send(new WelcomeMail());
+    return "successful";
+    
+});
 //Route::get('/food',view('food'));
 
 //  ------------------------

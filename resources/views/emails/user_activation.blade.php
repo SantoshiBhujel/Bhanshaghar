@@ -1,5 +1,5 @@
 @component('mail::message')
-Hello {{ $name ?? '' }}
+Hello {{ $code->User->name }}
 
 
 Activation Code

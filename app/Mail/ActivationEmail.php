@@ -22,7 +22,6 @@ class ActivationEmail extends Mailable /*implements ShouldQueue*/
      */
     public function __construct(ActivationCode $code)
     {
-        //
         $this->code = $code;
         $this->url=route('user.activation', $this->code);
     }

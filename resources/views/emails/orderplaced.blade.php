@@ -1,8 +1,8 @@
 @component('mail::message')
-# Introduction
+Hello  {{ $order->user->name }}
 <p>
 Thank you for your order. <br>
-Your payment has been done successfully with amount of NPR{{ round($order->billing_total,2) }}. 
+Your payment has been done successfully with amount of NPR {{ round($order->billing_total,2) }}. 
 </p>
 
 **Order ID:** {{ $order->id }} <br>

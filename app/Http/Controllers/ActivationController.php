@@ -8,9 +8,10 @@ use App\ActivationCode;
 use Illuminate\Http\Request;
 
 use App\Mail\ActivationEmail;
+use App\Mail\AccountActivation;
+use App\Events\ActivationEmailEvent;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use App\Events\ActivationEmailEvent;
  
 class ActivationController extends Controller
 {
@@ -26,18 +27,20 @@ class ActivationController extends Controller
 
 
     
-    public function coderesend(Request $request){
-        //dd($request);
+    public function coderesend(Request $request)
+    {
+       
         $user = User::whereEmail($request->email)->firstOrFail();
 
-        if($user->userIsActivated()){
+        if($user->userIsActivated())
+        {
             return redirect('/');
         }
-
+    
         event(new ActivationEmailEvent($user));
-        //Mail::to($user)->queue(new ActivationEmail($user->ActivationCode) );
+        //Mail::to($user)->queue(new AccountActivation($user->ActivationCode->code) );
 
-        return redirect('/login')->with('Success','Your code has been sent. Please check your mail');
+        return redirect('/login');
     }
 }
  

@@ -4,8 +4,9 @@ namespace App\Handlers\Events;
 
 use queue;
 use App\User;
-use App\Mail\ActivationEmail;
+use App\ActivationCode;
 
+use App\Mail\ActivationEmail;
 use App\Events\ActivationEmailEvent;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Queue\InteractsWithQueue;
@@ -32,7 +33,6 @@ class SendCodeByEmail
      */
     public function handle(ActivationEmailEvent $event)
     {
-        
-        Mail::to($event->user)->queue(new ActivationEmail($event->user->ActivationCode) );
+        Mail::to($event->user)->send(new ActivationEmail($event->user->ActivationCode) );
     }
 }
