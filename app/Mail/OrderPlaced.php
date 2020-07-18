@@ -20,6 +20,7 @@ class OrderPlaced extends Mailable
     public function __construct(Order $order)
     {
         $this->order= $order;
+        //dd($this->order->billing_email);
     }
 
 

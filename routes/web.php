@@ -202,6 +202,12 @@ Route::get('/mailable', function ()
 });
 
 
+//  ------------------------
+//  ROUTE FOR MY-ORDERS
+//  ------------------------
+
+Route::get('/my-orders','OrderController@index')->name('orders.index');
+
 
 //  ------------------------
 //  DELETE FROM DATABASE

@@ -7,6 +7,7 @@
     @if(count($posts)>0)
     <a href="/posts/create">Post your blog</a>
         @foreach ($posts as $post)
+            @can('view-post',$post)
             <div class="well">
 
                 <blockquote class="blockquote text-center">
@@ -31,7 +32,7 @@
                 </blockquote>
                 
             </div>
-             
+            @endcan
         @endforeach
 
         @else

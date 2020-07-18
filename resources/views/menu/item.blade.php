@@ -20,10 +20,10 @@
                         </ul>
                         @if (Auth::user())
                             <a href="{{route('cart.edit',$item->id)}}"><button><i class="fa fa-shopping-cart"></i>Add to Cart</button></a>
-                        @endif
 
-                        @if(Auth::user()->role=='admin')
-                            <a href="{{route('item.edit',$item->id)}}"><button>Edit</button></a>
+                            @if(Auth::user()->role=='admin')
+                                <a href="{{route('item.edit',$item->id)}}"><button>Edit</button></a>
+                            @endif
                         @endif
                 </div>
                 @endforeach

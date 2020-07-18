@@ -56,7 +56,6 @@ class CouponsController extends Controller
     {
         session()->forget('coupon');
         return redirect()->route('checkout.index')->with('success','Coupon destroyed');
-
     }
     
 }

@@ -48,7 +48,7 @@ class OrderPlacedNotification extends Notification
     public function toMail($notifiable)
     {
         //dd($notifiable);
-       
+       //dd($this->order->user->email);
         return (new MailMessage())->from($this->order->user->email)
                                 ->subject('Order Placed')
                                 ->markdown('emails.orderplacednotification',[ 'order'=>$this->order]);

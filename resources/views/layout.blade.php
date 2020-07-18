@@ -65,6 +65,7 @@
                             <a class="dropdown-item" href="{{ route('posts.personal') }}"><i class="fas fa-blog"></i>
                                 {{ __('Your Blogs') }}
                             </a>
+
                             <a class="dropdown-item" href="{{route('cart.index')}}">
                                 <i class="fa fa-shopping-cart"></i>{{__('Cart')}} 
                                 <span class="cart-count">
@@ -72,6 +73,10 @@
                                         <sup><span>{{ Cart::count() }}</span></sup>
                                     @endif
                                 </span>
+                            </a>
+
+                            <a class="dropdown-item" href="{{ route('orders.index') }}"><i class="fa fa-address-card" aria-hidden="true"></i>
+                                {{ __('Orders') }}
                             </a>
 
                             <a class="dropdown-item" href="{{route('cart.index')}}">

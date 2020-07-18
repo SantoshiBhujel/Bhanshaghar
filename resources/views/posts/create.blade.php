@@ -26,7 +26,7 @@
                     <textarea name="body" id="body" cols="35" rows="10" class="form-control"></textarea>
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
-                    <label for="body">Cover Image</label></label>
+                    <label for="cover_image">Cover Image</label></label>
                     <input type="file" name='cover_image' id='cover_image'>
                 </div>
             </div>

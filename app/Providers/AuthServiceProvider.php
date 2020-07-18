@@ -25,6 +25,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        Gate::define('view-post',function($user,$post){
+            return $user->id == $post->users_id;
+        });
+        
         Gate::define('update-post', function($user, $post)
         {
             return $user->id == $post->users_id;
@@ -32,7 +36,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('update-profile',function($user)
         {
-
+            return $user->id == $post->users_id;
         });
 
 
