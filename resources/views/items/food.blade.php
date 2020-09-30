@@ -33,7 +33,7 @@
 
                                 <form  action="{{route('cart.store')}}" method="post">
                                     @csrf
-                                    <input name="id" type="hidden" class="form-control" name="name" value="{{$item->id}}" >
+                                    <input name="id" type="hidden" class="form-control" value="{{$item->id}}" >
                                     <input name="name" type="hidden" class="form-control" value="{{$item->name}}" >
                                     <input name="price" type="hidden" class="form-control" value="{{$item->price}}" >
                                     <input name="image" type="hidden" class="form-control" value="{{$item->image}}" >

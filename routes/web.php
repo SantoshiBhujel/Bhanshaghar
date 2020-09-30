@@ -155,10 +155,6 @@ Route::resource('cart','CartController');
 
 Route::post('/cart/switchToSaveForLater/{id}','CartController@switchToSaveForLater')->name('cart.To.saveForLater');
 
-Route::get('/empty/saveforlater',function(){
-    Cart::instance('saveForLater')->destroy();
-})->name('empty.saveForLater');
-
 
 //  ------------------------
 //  ROUTE FOR SAVE FOR LATER

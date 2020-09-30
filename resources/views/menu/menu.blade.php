@@ -20,7 +20,7 @@
 
             <div class="row d-flex justify-content-around flex-wrap">
                 @foreach ($menus as $menu)
-                <div class="menu-box col-sm-12 col-md-3">
+                <div class="">
                     
                     <a href="{{route('item.show',$menu->id)}}"><h4>{{$menu->name}}</h4></a>
                         <ul>
